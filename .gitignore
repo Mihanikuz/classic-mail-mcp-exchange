@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.secrets/
+.data/
+data/
+.env
+.env.*
+!.env.example
+*.log
+coverage/
+*.sqlite*
+__pycache__/
+.DS_Store

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="440" viewBox="0 0 1280 440" role="img" aria-labelledby="title desc">
+<title id="title">Classic Mail MCP</title><desc id="desc">Your mailbox. Your agent. Your server. Open-source IMAP and SMTP for AI assistants.</desc>
+<rect width="1280" height="440" rx="24" fill="#0d1720"/>
+<path d="M890 0v440M1010 0v440M1130 0v440M0 110h1280M0 220h1280M0 330h1280" stroke="#1c303a" stroke-width="1"/>
+<rect x="68" y="58" width="54" height="54" rx="16" fill="#17372f" stroke="#8bdfbf"/>
+<path d="M81 76h28v20H81zM81 77l14 10 14-10" fill="none" stroke="#adf1d5" stroke-width="2.5" stroke-linejoin="round"/>
+<text x="140" y="93" fill="#eaf3f5" font-family="Arial,Helvetica,sans-serif" font-size="26" font-weight="700">Classic Mail MCP</text>
+<text x="68" y="196" fill="#eaf3f5" font-family="Arial,Helvetica,sans-serif" font-size="58" font-weight="700" letter-spacing="-2">Your mailbox. Your agent.</text>
+<text x="68" y="264" fill="#a7efd5" font-family="Arial,Helvetica,sans-serif" font-size="58" font-weight="700" letter-spacing="-2">Your server.</text>
+<text x="70" y="322" fill="#b9c9d1" font-family="Arial,Helvetica,sans-serif" font-size="21">Open-source IMAP &amp; SMTP for AI assistants.</text>
+<text x="70" y="388" fill="#8fa4af" font-family="Arial,Helvetica,sans-serif" font-size="15" letter-spacing="2">DOCKER · STDIO · HTTPS + OAUTH · MIT</text>
+<rect x="954" y="145" width="220" height="155" rx="24" fill="#14242e" stroke="#42665b" stroke-width="2"/>
+<path d="M983 180h162v89H983zM983 181l81 51 81-51" fill="none" stroke="#9fe7ce" stroke-width="4" stroke-linejoin="round"/>
+<circle cx="1161" cy="287" r="28" fill="#a7efd5"/><path d="m1149 287 8 8 16-17" fill="none" stroke="#163d30" stroke-width="4" stroke-linecap="round"/>
+</svg>

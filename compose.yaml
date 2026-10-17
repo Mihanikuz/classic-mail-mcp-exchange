@@ -1,0 +1,38 @@
+services:
+  mail:
+    build: .
+    image: classic-mail-mcp:local
+    user: '${LOCAL_UID:-1000}:${LOCAL_GID:-1000}'
+    init: true
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs: [/tmp:size=32m, mode=1777]
+    ports: ['127.0.0.1:8080:8080']
+    volumes:
+      - ./.secrets/config.json:/run/secrets/mail-config.json:ro
+      - ./.data:/data
+    environment:
+      TRANSPORT: http
+      AUTH_MODE: ${AUTH_MODE:-bearer}
+      ACCESS_MODE: ${ACCESS_MODE:-read-only}
+      BASE_URL: ${BASE_URL:-http://127.0.0.1:8080}
+      APP_CONFIG_FILE: /run/secrets/mail-config.json
+      HOST: 0.0.0.0
+      PORT: 8080
+      STORAGE: sqlite
+      SQLITE_PATH: /data/mail.sqlite
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "fetch('http://127.0.0.1:8080/status').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
+    stop_grace_period: 15s

@@ -1,0 +1,29 @@
+name: Bug report
+description: Report a reproducible problem without private data.
+body:
+  - type: markdown
+    attributes:
+      value: 'Never include passwords, tokens, callback URLs, config files or real email content. Use private security reporting for vulnerabilities.'
+  - type: input
+    id: version
+    attributes:
+      label: Version and deployment mode
+      placeholder: '2.0.0, Docker local HTTP, read-only'
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce with synthetic data
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: OS, client and sanitized error category

@@ -1,0 +1,15 @@
+const escape = (s: string) =>
+  s.replace(
+    /[&<>"']/g,
+    (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!,
+  );
+export function landingPage(base: string, access: string, auth: string) {
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Classic Mail · Your mailbox, your agent</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#0d1720;color:#eaf3f5}*{box-sizing:border-box}body{margin:0}main{max-width:1080px;margin:auto;padding:40px 28px 70px}nav{display:flex;justify-content:space-between;align-items:center;font-weight:650}a{color:#9fe7ce;text-underline-offset:5px}.mark{display:inline-grid;place-items:center;width:38px;height:38px;border:1px solid #77c9af;border-radius:12px;margin-right:12px;color:#a7efd5}header{padding:100px 0 55px;max-width:830px}.eyebrow{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#9fe7ce}h1{font-size:clamp(40px,6vw,72px);line-height:1.06;letter-spacing:-.045em;margin:20px 0}p{font-size:18px;line-height:1.65;color:#b9c9d1;max-width:650px}.connection{border:1px solid #36505a;border-radius:20px;padding:28px;background:#14242e}.label{color:#9fe7ce;font-size:13px;text-transform:uppercase;letter-spacing:.12em}code{display:block;overflow-wrap:anywhere;margin-top:14px;color:#fff;font-size:17px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px}.grid section{border-top:1px solid #36505a;padding:14px 0}.grid h2{font-size:18px}.grid p,footer{font-size:14px}footer{margin-top:65px;color:#8fa4af;line-height:1.8}@media(max-width:650px){header{padding-top:65px}.grid{grid-template-columns:1fr}nav a{font-size:13px}}
+</style></head><body><main><nav><div><span class="mark" aria-hidden="true">✉</span>Classic Mail</div><a href="https://github.com/kapitelh/classic-mail-mcp">Source &amp; setup ↗</a></nav>
+<header><div class="eyebrow">An open-source bridge for IMAP &amp; SMTP</div><h1>Your mailbox.<br>Your agent. Your server.</h1><p>Give your AI assistant a controlled connection to the email you already use. Self-hosted, with encrypted mail connections and explicit access settings.</p></header>
+<div class="connection"><div class="label">Streamable HTTP endpoint</div><code>${escape(base)}/mcp</code><p>Authentication: <strong>${escape(auth)}</strong> · Tool access: <strong>${escape(access)}</strong></p></div>
+<div class="grid"><section><h2>Read with care</h2><p>Search messages and inspect attachments without marking your messages as read.</p></section><section><h2>Act when enabled</h2><p>Opt into sending, drafts and folder management. Your client should ask before consequential actions.</p></section><section><h2>Keep control</h2><p>One operator per instance. Credentials stay on your server; requested mail content is shared with your connected AI client.</p></section></div>
+<footer>This page confirms the service is reachable, not that mailbox credentials work.<br>Connect your MCP client and run <strong>check_connection</strong> to verify them. MIT licensed.</footer></main></body></html>`;
+}

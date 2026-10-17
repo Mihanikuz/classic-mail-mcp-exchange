@@ -1,0 +1,48 @@
+{
+  "name": "classic-mail-mcp",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "tsx src/server.ts",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "check": "npm run build && npm test && npm run check:public && npm run format:check",
+    "check:public": "node scripts/check-public.mjs",
+    "setup": "python3 scripts/setup.py",
+    "verify": "node dist/verify-config.js",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "@google-cloud/firestore": "^9.3.1",
+    "fastmcp": "^4.22.4",
+    "imapflow": "^2.4.0",
+    "jose": "^6.2.12",
+    "mailparser": "^3.9.38",
+    "nodemailer": "^10.1.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/mailparser": "^3.9.0",
+    "@types/node": "^26.6.5",
+    "@types/nodemailer": "^8.0.2",
+    "prettier": "3.6.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "description": "Self-hosted IMAP and SMTP tools for AI agents. Docker, stdio and authenticated HTTP.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kapitelh/classic-mail-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kapitelh/classic-mail-mcp/issues"
+  },
+  "homepage": "https://github.com/kapitelh/classic-mail-mcp"
+}
