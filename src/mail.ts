@@ -240,15 +240,13 @@ export class MailService {
         });
         return {
           account,
-          folders: all
-            .slice(0, 500)
-            .map((f) => ({
-              path: f.path,
-              name: f.name,
-              specialUse: f.specialUse,
-              flags: [...f.flags],
-              status: f.status,
-            })),
+          folders: all.slice(0, 500).map((f) => ({
+            path: f.path,
+            name: f.name,
+            specialUse: f.specialUse,
+            flags: [...f.flags],
+            status: f.status,
+          })),
           truncated: all.length > 500,
           contentTrust: CONTENT_TRUST,
         };
@@ -349,14 +347,12 @@ export class MailService {
             text: (m.text ?? '').slice(0, LIMITS.text),
             textTruncated: (m.text?.length ?? 0) > LIMITS.text,
             flags,
-            attachments: m.attachments
-              .slice(0, 100)
-              .map((a, index) => ({
-                index,
-                filename: clip(a.filename, 255),
-                contentType: clip(a.contentType, 255),
-                size: a.size,
-              })),
+            attachments: m.attachments.slice(0, 100).map((a, index) => ({
+              index,
+              filename: clip(a.filename, 255),
+              contentType: clip(a.contentType, 255),
+              size: a.size,
+            })),
             attachmentsTruncated: m.attachments.length > 100,
             contentTrust: CONTENT_TRUST,
           };
