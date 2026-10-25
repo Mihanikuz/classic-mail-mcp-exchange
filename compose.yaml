@@ -8,13 +8,14 @@ services:
     read_only: true
     cap_drop: [ALL]
     security_opt: [no-new-privileges:true]
-    tmpfs: [/tmp:size=32m, mode=1777]
+    tmpfs: ['/tmp:size=32m,mode=1777']
     ports: ['127.0.0.1:8080:8080']
     volumes:
       - ./.secrets/config.json:/run/secrets/mail-config.json:ro
       - ./.data:/data
     environment:
       TRANSPORT: http
+      MAIL_BACKEND: ${MAIL_BACKEND:-imap}
       AUTH_MODE: ${AUTH_MODE:-bearer}
       ACCESS_MODE: ${ACCESS_MODE:-read-only}
       BASE_URL: ${BASE_URL:-http://127.0.0.1:8080}

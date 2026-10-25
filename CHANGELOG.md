@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1.0 — claude.ai and Exchange (fork)
+
+- claude.ai custom connector: allow `https://claude.ai/api/mcp/auth_callback`, the `https://claude.ai` origin, and `resource` sent as `BASE_URL/mcp`.
+- Consent page CSP allows the post-approval redirect to `https://accounts.google.com` (Chrome enforces `form-action` on redirects).
+- New read-only Exchange Web Services backend (`MAIL_BACKEND=ews`, only with `ACCESS_MODE=read-only`): folders, search, read, attachments, connection check; no write operations.
+- `compose.yaml`: fix `tmpfs` syntax rejected by recent Docker Compose; pass `MAIL_BACKEND`.
+
 ## 2.0.0 — public preview
 
 - General operator-configured IMAP and SMTP hosts, including mandatory STARTTLS.

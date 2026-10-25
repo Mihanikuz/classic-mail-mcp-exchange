@@ -8,6 +8,11 @@
   <a href="docs/security.md">Security model</a>
 </p>
 
+> **About this fork.** Fork of [kapitelh/classic-mail-mcp](https://github.com/kapitelh/classic-mail-mcp) that adds:
+> **claude.ai custom connector support** (OAuth callback, `resource` handling, CSP fix for the consent page) and a
+> **read-only Microsoft Exchange (EWS) backend** (`MAIL_BACKEND=ews`) for mailboxes where IMAP is unavailable but Outlook works.
+> Setup guide (Russian): [docs/exchange-claude.ru.md](docs/exchange-claude.ru.md).
+
 **A self-hosted MCP server for the IMAP and SMTP mailbox you already have.**
 Connect an AI assistant to search and read email, inspect attachments, and — when explicitly enabled — send messages, manage drafts and organize folders.
 

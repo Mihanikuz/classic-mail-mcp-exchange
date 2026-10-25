@@ -7,10 +7,11 @@ import { authenticate, authRoutes, createProxy, type Session } from './auth.js';
 import { FirestoreLedger, rateLimit, type Database } from './store.js';
 import { SqliteStore } from './sqlite.js';
 import { MailService } from './mail.js';
+import { EwsMailService } from './ews.js';
 import { registerTools } from './tools.js';
 import { landingPage } from './ui.js';
 
-const VERSION = '2.0.0';
+const VERSION = '2.1.0';
 async function main() {
   process.umask(0o077);
   const config = readConfig();
@@ -76,12 +77,14 @@ async function main() {
       );
     registerTools(
       server,
-      new MailService(
-        config.secrets.accounts,
-        undefined,
-        new FirestoreLedger(db),
-        config.secrets.encryptionKey,
-      ),
+      process.env.MAIL_BACKEND === 'ews' && config.accessMode === 'read-only'
+        ? (new EwsMailService(config.secrets.accounts) as unknown as MailService)
+        : new MailService(
+            config.secrets.accounts,
+            undefined,
+            new FirestoreLedger(db),
+            config.secrets.encryptionKey,
+          ),
       db,
       {
         readOnly: config.accessMode === 'read-only',
@@ -151,10 +154,10 @@ async function main() {
     res.setHeader('X-Frame-Options', 'DENY');
     res.setHeader(
       'Content-Security-Policy',
-      "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'",
+      "default-src 'none'; style-src 'unsafe-inline'; form-action 'self' https://accounts.google.com; base-uri 'none'; frame-ancestors 'none'",
     );
     const origin = req.headers.origin;
-    if (origin && ![config.baseUrl, 'https://chatgpt.com'].includes(origin)) {
+    if (origin && ![config.baseUrl, 'https://chatgpt.com', 'https://claude.ai'].includes(origin)) {
       res.writeHead(403).end();
       req.resume();
       return;

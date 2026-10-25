@@ -10,10 +10,11 @@ import { SignJWT, jwtVerify, decodeJwt } from 'jose';
 export type Session = { email: string; sub: string };
 export const SCOPES = ['openid', 'email'];
 export const CHATGPT_CALLBACK = 'https://chatgpt.com/connector_platform_oauth_redirect';
+export const CLAUDE_CALLBACK = 'https://claude.ai/api/mcp/auth_callback';
 
 /** Native Codex returns to a temporary loopback listener, never an arbitrary web host. */
 export function isAllowedCallback(uri: unknown): uri is string {
-  if (uri === CHATGPT_CALLBACK) return true;
+  if (uri === CHATGPT_CALLBACK || uri === CLAUDE_CALLBACK) return true;
   if (typeof uri !== 'string') return false;
   const match =
     /^http:\/\/(?:127\.0\.0\.1|localhost):([1-9]\d{0,4})\/callback(?:\/[A-Za-z0-9_-]{1,128})?$/.exec(
@@ -41,6 +42,7 @@ export function createProxy(baseUrl: string, secrets: Secrets, db: Database) {
     // before registration/authorization; registered redirect URIs remain exact-match bound.
     allowedRedirectUriPatterns: [
       CHATGPT_CALLBACK,
+      CLAUDE_CALLBACK,
       'http://127.0.0.1:*/callback*',
       'http://localhost:*/callback*',
     ],
@@ -131,10 +133,10 @@ export function validateOAuthRequest(params: URLSearchParams, baseUrl: string, a
   )
     throw new OAuthProxyError(
       'invalid_redirect_uri',
-      'Use the ChatGPT callback or a native loopback callback',
+      'Use the ChatGPT/Claude callback or a native loopback callback',
     );
   const resources = params.getAll('resource');
-  if (resources.some((x) => x !== baseUrl) || resources.length > 1)
+  if (resources.some((x) => x !== baseUrl && x !== `${baseUrl}/mcp`) || resources.length > 1)
     throw new OAuthProxyError('invalid_target', 'Resource does not match this server');
   const scope = params.get('scope');
   if (scope && scope.split(' ').some((s) => !SCOPES.includes(s)))
@@ -223,7 +225,7 @@ export function authRoutes(
       return c.json(
         {
           error: 'invalid_redirect_uri',
-          error_description: 'Use the ChatGPT callback or a native loopback callback',
+          error_description: 'Use the ChatGPT/Claude callback or a native loopback callback',
         },
         400,
       );
