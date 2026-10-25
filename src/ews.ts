@@ -139,7 +139,8 @@ export class EwsMailService {
       '<t:AdditionalProperties><t:FieldURI FieldURI="folder:DisplayName"/><t:FieldURI FieldURI="folder:ParentFolderId"/>' +
       '<t:FieldURI FieldURI="folder:TotalCount"/><t:FieldURI FieldURI="folder:UnreadCount"/><t:FieldURI FieldURI="folder:FolderClass"/></t:AdditionalProperties>';
     const all: string[] = [];
-    for (let offset = 0; offset < 5000; ) {
+    let offset = 0;
+    while (offset < 5000) {
       const xml = await this.call(
         a,
         `<m:FindFolder Traversal="Deep"><m:FolderShape><t:BaseShape>IdOnly</t:BaseShape>${props}</m:FolderShape>` +
