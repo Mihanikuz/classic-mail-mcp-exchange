@@ -1,5 +1,7 @@
 # Exchange (EWS) и claude.ai: развёртывание
 
+[English version](exchange-claude.md)
+
 Этот форк добавляет к [kapitelh/classic-mail-mcp](https://github.com/kapitelh/classic-mail-mcp) две вещи:
 
 1. **Подключение к claude.ai** как кастомного коннектора (веб, Desktop, мобильное приложение) через OAuth со входом Google.
@@ -25,6 +27,7 @@
 - Письма при чтении не помечаются прочитанными (`GetItem` не меняет `IsRead`). Текст и вложения извлекаются из MIME-содержимого письма тем же парсером, что и в IMAP-модуле, с теми же лимитами: письмо до 8 МиБ, вложение до 4 МиБ.
 - Папки задаются путём из `list_folders` (`Входящие/Проект`) или как `INBOX`. В поиске `nextBeforeUid` означает смещение для следующей страницы.
 - Фильтры по дате, прочтению, теме и тексту выполняет Exchange. Фильтры по отправителю и получателю применяются уже к результатам (просматривается до 1000 писем за запрос).
+- Exchange Online / Microsoft 365 с обязательной современной аутентификацией (OAuth) для EWS не поддерживается.
 
 Проверить, что EWS доступен и пароль подходит, можно ещё до установки. Ответ `401` на запрос без пароля означает, что сервис есть:
 
@@ -48,7 +51,7 @@ curl -s -o /dev/null -w "%{http_code}\n" https://mail.example.com/EWS/Exchange.a
 ### 2. Конфигурация
 
 ```sh
-git clone https://github.com/<you>/<this-repo>.git /opt/classic-mail-mcp
+git clone https://github.com/Mihanikuz/classic-mail-mcp-exchange.git /opt/classic-mail-mcp
 cd /opt/classic-mail-mcp
 python3 scripts/setup.py --mode oauth
 ```
